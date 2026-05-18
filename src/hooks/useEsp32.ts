@@ -159,8 +159,15 @@ export function useEsp32() {
 
   const dismissLatestViolation = useCallback(() => setLatestViolation(null), []);
 
+  const triggerViolation = useCallback((lane: "N" | "S" | "W" = "W") => {
+    if (config.useSimulator && simRef.current) {
+      simRef.current.triggerViolation(lane);
+    }
+  }, [config.useSimulator]);
+
   return {
     data, conn, lastUpdate, send, config, updateConfig,
     violations, latestViolation, clearViolations, dismissLatestViolation,
+    triggerViolation,
   };
 }
