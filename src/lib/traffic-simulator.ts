@@ -3,7 +3,9 @@ import type { Command, Lane, TrafficData, ViolationEvent } from "./traffic-types
 
 const BASE = 15;
 const ADDON = 10;
-const next = (l: Lane): Lane => (l === "N" ? "S" : l === "S" ? "W" : "N");
+// Rotation: N → S → W → E → N
+const next = (l: Lane): Lane =>
+  l === "N" ? "S" : l === "S" ? "W" : l === "W" ? "E" : "N";
 
 export class TrafficSimulator {
   private state: TrafficData = {
@@ -12,10 +14,12 @@ export class TrafficSimulator {
     countN: 0,
     countS: 0,
     countW: 0,
+    countE: 0,
     addonApplied: false,
     irN: false,
     irS: false,
     irW: false,
+    irE: false,
     mode: "AUTO",
   };
   private greenTime = BASE;
@@ -58,7 +62,7 @@ export class TrafficSimulator {
       this.forced = cmd.lane;
       this.switchTo(cmd.lane);
     } else if (cmd.action === "RESET_COUNTS") {
-      this.state = { ...this.state, countN: 0, countS: 0, countW: 0 };
+      this.state = { ...this.state, countN: 0, countS: 0, countW: 0, countE: 0 };
       this.emit();
     } else if (cmd.action === "SET_MODE") {
       this.state = { ...this.state, mode: cmd.mode };
@@ -79,7 +83,7 @@ export class TrafficSimulator {
   }
   private tick() {
     // random vehicle arrivals
-    (["N", "S", "W"] as Lane[]).forEach((l) => {
+    (["N", "S", "W", "E"] as Lane[]).forEach((l) => {
       const ir = Math.random() < 0.35;
       this.state = { ...this.state, [`ir${l}` as "irN"]: ir } as TrafficData;
       if (ir) {

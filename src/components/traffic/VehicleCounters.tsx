@@ -6,10 +6,11 @@ const lanes = [
   { key: "countN", label: "North", color: "hsl(var(--signal-green))" },
   { key: "countS", label: "South", color: "hsl(var(--primary))" },
   { key: "countW", label: "West", color: "hsl(var(--signal-yellow))" },
+  { key: "countE", label: "East", color: "hsl(var(--signal-cyan, var(--primary)))" },
 ] as const;
 
 export function VehicleCounters({ data }: { data: TrafficData }) {
-  const max = Math.max(1, data.countN, data.countS, data.countW, 5);
+  const max = Math.max(1, data.countN, data.countS, data.countW, data.countE, 5);
   return (
     <Card className="panel border-border p-5">
       <div className="flex items-center justify-between mb-4">

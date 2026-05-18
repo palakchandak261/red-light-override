@@ -30,7 +30,7 @@ const Index = () => {
   });
 
   const [soundEnabled, setSoundEnabled] = useState(true);
-  const [violatingLane, setViolatingLane] = useState<"N" | "S" | "W" | null>(null);
+  const [violatingLane, setViolatingLane] = useState<"N" | "S" | "W" | "E" | null>(null);
 
   useEffect(() => {
     if (!latestViolation) return;
@@ -39,24 +39,31 @@ const Index = () => {
     return () => clearTimeout(t);
   }, [latestViolation]);
 
-  // When emergency arrives on an ESP32-controlled lane, force-green it
-  useEffect(() => {
-    if (!emergency.active) return;
-    const lc = emergency.active.laneCode;
-    if (lc === "N" || lc === "S" || lc === "W") {
-      send({ action: "SET_MODE", mode: "MANUAL" });
-      send({ action: "FORCE_GREEN", lane: lc });
-    }
-    return () => { send({ action: "SET_MODE", mode: "AUTO" }); };
-  }, [emergency.active, send]);
-
   const fallback = data ?? {
     currentLane: "N" as const,
-    remainingTime: 0, countN: 0, countS: 0, countW: 0, addonApplied: false,
+    remainingTime: 0, countN: 0, countS: 0, countW: 0, countE: 0, addonApplied: false,
   };
 
   const emLane = emergency.active?.laneCode ?? null;
-  const displayData = emLane && (emLane === "N" || emLane === "S" || emLane === "W")
+
+  // Suppress emergency override when the target lane is ALREADY green —
+  // no need to override; ignore the detection entirely.
+  const alreadyGreen = !!emLane && emLane === fallback.currentLane;
+
+  useEffect(() => {
+    if (!emergency.active) return;
+    if (alreadyGreen) {
+      // dismiss the detection without forcing anything
+      emergency.dismiss();
+      return;
+    }
+    const lc = emergency.active.laneCode;
+    send({ action: "SET_MODE", mode: "MANUAL" });
+    send({ action: "FORCE_GREEN", lane: lc });
+    return () => { send({ action: "SET_MODE", mode: "AUTO" }); };
+  }, [emergency.active, alreadyGreen, send, emergency]);
+
+  const displayData = emLane && !alreadyGreen
     ? { ...fallback, currentLane: emLane, remainingTime: emergency.remaining }
     : fallback;
 

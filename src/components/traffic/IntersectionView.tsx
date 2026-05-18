@@ -6,10 +6,11 @@ const laneConfig: Record<Lane, { label: string; pos: string; arrow: string; rota
   N: { label: "NORTH", pos: "top-4 left-1/2 -translate-x-1/2", arrow: "↓", rotation: 180 },
   S: { label: "SOUTH", pos: "bottom-4 left-1/2 -translate-x-1/2", arrow: "↑", rotation: 0 },
   W: { label: "WEST",  pos: "left-4 top-1/2 -translate-y-1/2", arrow: "→", rotation: 90 },
+  E: { label: "EAST",  pos: "right-4 top-1/2 -translate-y-1/2", arrow: "←", rotation: 270 },
 };
 
-// Rotation order used by ESP32: N → S → W → N
-const ROTATION: Lane[] = ["N", "S", "W"];
+// Rotation order: N → S → W → E → N
+const ROTATION: Lane[] = ["N", "S", "W", "E"];
 const BASE_GREEN = 8;     // seconds (matches ESP32 baseline)
 const PER_VEHICLE = 2;    // seconds added per waiting vehicle
 
@@ -125,7 +126,7 @@ export function IntersectionView({
 }: {
   data: TrafficData;
   violatingLane?: Lane | null;
-  emergencyLane?: Lane | "E" | null;
+  emergencyLane?: Lane | null;
 }) {
   return (
     <div className="relative w-full max-w-[720px] mx-auto rounded-2xl border border-border panel overflow-hidden"
@@ -267,36 +268,11 @@ export function IntersectionView({
       <div className="absolute left-[22%] top-1/2 -translate-y-1/2 text-[10px] text-white/30 font-bold tracking-widest">IN</div>
       <div className="absolute right-[22%] top-1/2 -translate-y-1/2 text-[10px] text-white/30 font-bold tracking-widest">OUT</div>
       
-      {/* Traffic Signal Poles (N, S, W controlled by hardware) */}
+      {/* Traffic Signal Poles (N, S, W, E) */}
       <TrafficSignalPole lane="N" data={data} violating={violatingLane === "N"} />
       <TrafficSignalPole lane="S" data={data} violating={violatingLane === "S"} />
       <TrafficSignalPole lane="W" data={data} violating={violatingLane === "W"} />
-
-      {/* EAST — passive / uncontrolled indicator */}
-      <div className="absolute z-20 top-1/2 right-4 -translate-y-1/2 panel rounded-lg border border-dashed border-border/70 p-3 w-40 opacity-80">
-        <div className="flex items-center justify-between text-xs text-muted-foreground tracking-widest">
-          <span>EAST</span>
-          <span className="text-base">←</span>
-        </div>
-        <div className="mt-2 flex items-center gap-3">
-          <div className="flex flex-col gap-1 rounded-full bg-black p-1.5 border-2 border-zinc-700 shadow-lg opacity-50">
-            <div className="h-3 w-3 rounded-full bg-muted opacity-30" />
-            <div className="h-2.5 w-2.5 rounded-full bg-yellow-500/20" />
-            <div className="h-3 w-3 rounded-full bg-muted opacity-30" />
-          </div>
-          <div className="flex-1">
-            <div className="font-mono-tab text-xs leading-tight text-muted-foreground">
-              No signal
-            </div>
-            <div className="text-[9px] uppercase tracking-widest text-muted-foreground/70 mt-1">
-              Uncontrolled
-            </div>
-          </div>
-        </div>
-        <div className="mt-2 text-[9px] text-muted-foreground/60 italic pt-2 border-t border-border/50">
-          Not wired to ESP32
-        </div>
-      </div>
+      <TrafficSignalPole lane="E" data={data} violating={violatingLane === "E"} />
     </div>
   );
 }

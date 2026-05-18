@@ -1,4 +1,4 @@
-export type Lane = "N" | "S" | "W";
+export type Lane = "N" | "S" | "W" | "E";
 
 export interface TrafficData {
   currentLane: Lane;
@@ -6,11 +6,13 @@ export interface TrafficData {
   countN: number;
   countS: number;
   countW: number;
+  countE: number;
   addonApplied: boolean;
   // optional sensor + meta
   irN?: boolean;
   irS?: boolean;
   irW?: boolean;
+  irE?: boolean;
   mode?: "AUTO" | "MANUAL";
 }
 
@@ -36,10 +38,10 @@ export interface EmergencyEvent {
   rfid: string;
   vehicle: EmergencyVehicleType;
   lane: EmergencyLaneNum;
-  laneCode: Lane | "E";
+  laneCode: Lane;
   timestamp: number;          // ms
   overrideDuration: number;   // seconds
-  status: "ACTIVE" | "CLEARED";
+  status: "ACTIVE" | "CLEARED" | "IGNORED";
 }
 
 // Authorized RFID tag registry
@@ -52,6 +54,6 @@ export const AUTHORIZED_RFIDS: Record<string, EmergencyVehicleType> = {
   POL302: "Police Vehicle",
 };
 
-export const LANE_NUM_TO_CODE: Record<EmergencyLaneNum, Lane | "E"> = {
+export const LANE_NUM_TO_CODE: Record<EmergencyLaneNum, Lane> = {
   1: "N", 2: "S", 3: "W", 4: "E",
 };

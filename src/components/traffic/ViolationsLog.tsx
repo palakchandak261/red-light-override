@@ -7,12 +7,12 @@ import { ShieldAlert, Trash2, Siren } from "lucide-react";
 import type { ViolationEvent } from "@/lib/traffic-types";
 
 const laneName = (l: ViolationEvent["lane"]) =>
-  l === "N" ? "North" : l === "S" ? "South" : "West";
+  l === "N" ? "North" : l === "S" ? "South" : l === "W" ? "West" : "East";
 
 interface Props {
   violations: ViolationEvent[];
   onClear: () => void;
-  onPush?: (lane: "N" | "S" | "W") => void;
+  onPush?: (lane: "N" | "S" | "W" | "E") => void;
   canPush?: boolean;
 }
 
@@ -30,7 +30,7 @@ export function ViolationsLog({ violations, onClear, onPush, canPush }: Props) {
         <div className="flex items-center gap-1">
           {canPush && onPush && (
             <>
-              {(["N", "S", "W"] as const).map((l) => (
+              {(["N", "S", "W", "E"] as const).map((l) => (
                 <Button
                   key={l}
                   size="sm" variant="outline"
