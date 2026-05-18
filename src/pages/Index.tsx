@@ -145,7 +145,12 @@ const Index = () => {
 
           <EmergencyLog events={emergency.log} onClear={emergency.clearLog} />
 
-          <ViolationsLog violations={violations} onClear={clearViolations} />
+          <ViolationsLog
+            violations={violations}
+            onClear={clearViolations}
+            canPush={config.useSimulator}
+            onPush={triggerViolation}
+          />
 
           <Analytics data={data} />
         </div>
