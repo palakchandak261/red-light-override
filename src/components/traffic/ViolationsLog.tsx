@@ -12,7 +12,7 @@ const laneName = (l: ViolationEvent["lane"]) =>
 interface Props {
   violations: ViolationEvent[];
   onClear: () => void;
-  onPush?: (lane: "N" | "S" | "W") => void;
+  onPush?: (lane: "N" | "S" | "W" | "E") => void;
   canPush?: boolean;
 }
 
