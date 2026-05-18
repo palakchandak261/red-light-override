@@ -27,14 +27,30 @@ export function ViolationsLog({ violations, onClear, onPush, canPush }: Props) {
             {violations.length}
           </Badge>
         </div>
-        <Button
-          size="sm" variant="ghost"
-          onClick={onClear}
-          disabled={!violations.length}
-          className="h-7 px-2 text-xs"
-        >
-          <Trash2 className="h-3 w-3 mr-1" /> Clear
-        </Button>
+        <div className="flex items-center gap-1">
+          {canPush && onPush && (
+            <>
+              {(["N", "S", "W"] as const).map((l) => (
+                <Button
+                  key={l}
+                  size="sm" variant="outline"
+                  onClick={() => onPush(l)}
+                  className="h-7 px-2 text-xs border-signal-red/40 text-signal-red hover:bg-signal-red/10 hover:text-signal-red"
+                >
+                  <Siren className="h-3 w-3 mr-1" /> Push {l}
+                </Button>
+              ))}
+            </>
+          )}
+          <Button
+            size="sm" variant="ghost"
+            onClick={onClear}
+            disabled={!violations.length}
+            className="h-7 px-2 text-xs"
+          >
+            <Trash2 className="h-3 w-3 mr-1" /> Clear
+          </Button>
+        </div>
       </div>
 
       {violations.length === 0 ? (
