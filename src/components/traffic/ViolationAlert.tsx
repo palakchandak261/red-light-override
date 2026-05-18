@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import type { ViolationEvent } from "@/lib/traffic-types";
 
 const laneName = (l: ViolationEvent["lane"]) =>
-  l === "N" ? "North" : l === "S" ? "South" : "West";
+  l === "N" ? "North" : l === "S" ? "South" : l === "W" ? "West" : "East";
 
 function playBeep() {
   try {
