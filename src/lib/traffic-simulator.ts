@@ -43,6 +43,7 @@ export class TrafficSimulator {
     this.violationListeners.add(fn);
     return () => this.violationListeners.delete(fn);
   }
+  triggerViolation(lane: Lane) { this.emitViolation(lane); }
   private emitViolation(lane: Lane) {
     const ev: ViolationEvent = {
       id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
