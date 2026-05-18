@@ -122,22 +122,11 @@ export function useEmergency(opts: { wsUrl: string; useDashboardSim: boolean }) 
   }, [useDummy, useDashboardSim, active, remaining]);
 
   // Dummy generator
+  // Emergency-vehicle red-light-jumper events are pushed manually in simulation mode.
+  // Use `triggerManual` (wired to the "Simulate Detection" button) — no auto generator.
   useEffect(() => {
-    if (dummyRef.current) { window.clearInterval(dummyRef.current); dummyRef.current = null; }
-    if (!useDummy) return;
-    const schedule = () => {
-      const delay = 12000 + Math.random() * 15000;
-      dummyRef.current = window.setTimeout(() => {
-        if (!active) {
-          setRfidStatus("SCANNING");
-          window.setTimeout(() => trigger(randomDummy()), 800);
-        }
-        schedule();
-      }, delay) as unknown as number;
-    };
-    schedule();
-    return () => { if (dummyRef.current) window.clearTimeout(dummyRef.current); };
-  }, [useDummy, active, trigger]);
+    if (dummyRef.current) { window.clearTimeout(dummyRef.current); dummyRef.current = null; }
+  }, [useDummy, active]);
 
   const toggleDummy = useCallback((v: boolean) => {
     setUseDummy(v);
