@@ -30,7 +30,7 @@ export function ViolationsLog({ violations, onClear, onPush, canPush }: Props) {
         <div className="flex items-center gap-1">
           {canPush && onPush && (
             <>
-              {(["N", "S", "W"] as const).map((l) => (
+              {(["N", "S", "W", "E"] as const).map((l) => (
                 <Button
                   key={l}
                   size="sm" variant="outline"

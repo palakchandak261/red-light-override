@@ -17,6 +17,7 @@ const laneFromName = (name: string): Lane | null => {
   if (u === "N" || u === "NORTH") return "N";
   if (u === "S" || u === "SOUTH") return "S";
   if (u === "W" || u === "WEST") return "W";
+  if (u === "E" || u === "EAST") return "E";
   return null;
 };
 
