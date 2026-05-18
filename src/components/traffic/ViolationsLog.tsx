@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ShieldAlert, Trash2 } from "lucide-react";
+import { ShieldAlert, Trash2, Siren } from "lucide-react";
 import type { ViolationEvent } from "@/lib/traffic-types";
 
 const laneName = (l: ViolationEvent["lane"]) =>
@@ -12,9 +12,11 @@ const laneName = (l: ViolationEvent["lane"]) =>
 interface Props {
   violations: ViolationEvent[];
   onClear: () => void;
+  onPush?: (lane: "N" | "S" | "W") => void;
+  canPush?: boolean;
 }
 
-export function ViolationsLog({ violations, onClear }: Props) {
+export function ViolationsLog({ violations, onClear, onPush, canPush }: Props) {
   return (
     <Card className="panel border-border p-5">
       <div className="flex items-center justify-between mb-4">
