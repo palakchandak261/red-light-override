@@ -21,6 +21,7 @@ const Index = () => {
   const {
     data, conn, lastUpdate, send, config, updateConfig,
     violations, latestViolation, clearViolations, dismissLatestViolation,
+    triggerViolation,
   } = useEsp32();
 
   const emergency = useEmergency({
