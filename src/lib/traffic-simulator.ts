@@ -96,10 +96,8 @@ export class TrafficSimulator {
       this.state = { ...this.state, addonApplied: true };
     }
 
-    // simulated red-light violation on West when West is RED (IR_W_VIOLATION)
-    if (cur !== "W" && Math.random() < 0.012) {
-      this.emitViolation("W");
-    }
+    // Red-light violations are pushed manually in simulation mode (see triggerViolation).
+
 
     this.elapsed += 1;
     const remaining = Math.max(0, this.greenTime - this.elapsed);
