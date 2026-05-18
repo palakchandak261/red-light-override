@@ -3,7 +3,7 @@ import type { TrafficData } from "@/lib/traffic-types";
 import { useEffect, useRef, useState } from "react";
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
-interface Point { t: number; N: number; S: number; W: number; }
+interface Point { t: number; N: number; S: number; W: number; E: number; }
 
 export function Analytics({ data }: { data: TrafficData | null }) {
   const [series, setSeries] = useState<Point[]>([]);
@@ -15,7 +15,7 @@ export function Analytics({ data }: { data: TrafficData | null }) {
       const d = ref.current;
       if (!d) return;
       setSeries((s) => {
-        const next = [...s, { t: Date.now(), N: d.countN, S: d.countS, W: d.countW }];
+        const next = [...s, { t: Date.now(), N: d.countN, S: d.countS, W: d.countW, E: d.countE }];
         return next.slice(-30);
       });
     }, 2000);
@@ -24,9 +24,12 @@ export function Analytics({ data }: { data: TrafficData | null }) {
 
   const peak = (() => {
     if (!data) return "—";
-    const m = Math.max(data.countN, data.countS, data.countW);
+    const m = Math.max(data.countN, data.countS, data.countW, data.countE);
     if (m === 0) return "None";
-    return data.countN === m ? "North" : data.countS === m ? "South" : "West";
+    if (data.countN === m) return "North";
+    if (data.countS === m) return "South";
+    if (data.countW === m) return "West";
+    return "East";
   })();
 
   return (
@@ -68,6 +71,7 @@ export function Analytics({ data }: { data: TrafficData | null }) {
             <Area type="monotone" dataKey="N" stroke="hsl(var(--signal-green))" fill="url(#gN)" strokeWidth={2} />
             <Area type="monotone" dataKey="S" stroke="hsl(var(--primary))" fill="url(#gS)" strokeWidth={2} />
             <Area type="monotone" dataKey="W" stroke="hsl(var(--signal-yellow))" fill="url(#gW)" strokeWidth={2} />
+            <Area type="monotone" dataKey="E" stroke="hsl(var(--signal-cyan, var(--primary)))" fill="url(#gW)" strokeWidth={2} />
           </AreaChart>
         </ResponsiveContainer>
       </div>
