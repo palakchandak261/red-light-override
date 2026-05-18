@@ -42,8 +42,8 @@ export function ControlPanel({ data, send }: Props) {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-2 mb-3">
-        {(["N", "S", "W"] as Lane[]).map((l) => (
+      <div className="grid grid-cols-4 gap-2 mb-3">
+        {(["N", "S", "W", "E"] as Lane[]).map((l) => (
           <Button
             key={l}
             variant="outline"
