@@ -19,16 +19,7 @@ Lanes: **N (North)**, **S (South)**, **W (West)**, **E (East)**.
 ### Hardware Prototype
 ![Hardware Prototype – 4-lane junction with toy vehicles](docs/hardware-prototype.jpg)
 
-### Demo Video
-> Place a short MP4/GIF of the working system at `docs/demo.mp4` (or upload to YouTube and paste the link below).
 
-<!-- Local file (recommended for GitHub, < 25 MB) -->
-https://github.com/<your-username>/<your-repo>/assets/<asset-id>/demo.mp4
-
-<!-- Or YouTube embed (replace VIDEO_ID) -->
-[![Watch the demo](https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg)](https://youtu.be/VIDEO_ID)
-
-> **Tip:** To embed a video directly in the README on GitHub, drag-and-drop the MP4 file into the GitHub web editor while editing this README — GitHub will host it and insert the correct URL automatically.
 
 ---
 
