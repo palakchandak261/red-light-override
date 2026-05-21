@@ -1,6 +1,6 @@
-# SmartFlow — AI‑Assisted Smart Traffic Management System
+# SmartFlow — IoT-Enabled Smart Traffic Management System
 
-SmartFlow is a 4‑lane smart traffic control system that combines an **ESP32‑based hardware controller** with a **React dashboard** for live monitoring, manual override, emergency‑vehicle pre‑emption (RFID), and red‑light‑violation logging.
+SmartFlow is an **IoT smart traffic control system** that pairs an **ESP32-based hardware controller** (IR sensors, RFID reader, 7-segment displays) with a **React dashboard** for live monitoring, manual override, emergency-vehicle pre-emption, and red-light-violation logging.
 
 The dashboard can run in two modes:
 
