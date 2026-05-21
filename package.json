@@ -2,6 +2,7 @@
   "name": "vite_react_shadcn_ts",
   "private": true,
   "version": "0.0.0",
+  "description": "IoT-enabled smart traffic signal management system with ESP32 hardware and React dashboard for real-time adaptive control.",
   "type": "module",
   "scripts": {
     "dev": "vite",
