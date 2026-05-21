@@ -237,4 +237,4 @@ PRs welcome. Please:
 
 ## 📜 License
 
-MIT — see `LICENSE` (add one if missing).
+MIT — see `LICENSE` 
