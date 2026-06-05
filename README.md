@@ -11,6 +11,14 @@ Lanes: **N (North)**, **S (South)**, **W (West)**, **E (East)**.
 
 ---
 
+## 🎥 Demo
+
+[![SmartFlow Demo](https://img.youtube.com/vi/-57ha25zZBc/maxresdefault.jpg)](https://www.youtube.com/watch?v=-57ha25zZBc)
+
+> Click the thumbnail to watch the full demo on YouTube.
+
+---
+
 ## 📸 Project Showcase
 
 ### Dashboard (Web UI)
@@ -249,4 +257,4 @@ PRs welcome. Please:
 
 ## 📜 License
 
-MIT — see `LICENSE` 
+MIT — see `LICENSE`
